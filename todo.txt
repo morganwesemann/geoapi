@@ -1,0 +1,67 @@
+/*****TODO******/
+
+
+GET /location/@minLatitude/@minLongitude/@maxLatitude/@maxLongitude
+SELECT * FROM well WHERE latitude >= minLatitude AND longitude >= minLongitude AND latitude <= maxLongitude AND longitude <= maxLongitude
+
+GET /rainfall/date/@date
+
+GET /rainfall/location/@latitude/@longitude
+
+GET /rainfall/@id
+
+GET /rainfall/amount/@lg/@amount
+
+GET /api/analysis/
+
+//TODO: ANALYSIS FUNCTIONS 
+
+/*****DONE******/
+
+POST /owner
+INSERT INTO owner (name,type) VALUES (@name,@type)
+
+GET /owner/@id
+SELECT * FROM owner WHERE id=@id
+
+GET /owner/list
+SELECT * FROM owner
+
+PUT /owner/@id
+UPDATE owner SET col1=val1, col2=val2 WHERE id=@id
+
+DELETE /owner/@id
+DELETE FROM owner WHERE id=@id
+
+GET /well/list 
+SELECT * FROM well
+
+DELETE /well/@id
+DELETE FROM well WHERE id=@id
+
+POST /well 
+INSERT INTO well (aCode,typeCode,ownerID,latitude,longitude,county,state,depth,usageType,pump,pumpDescr,bottomElevation,waterElevation,surfaceElevation,casingID,diameter,topDepth,bottomDepth,additionalText) VALUES (aCode,typeCode,ownerID,latitude,longitude,county,state,depth,usageType,pump,pumpDescr,bottomElevation,waterElevation,surfaceElevation,casingID,diameter,topDepth,bottomDepth,additionalText)
+
+PUT /well/@id
+UPDATE well SET col1=val1, col2=val2 WHERE id=@id
+
+GET /transducer/list
+SELECT * FROM transducer
+
+DELETE /transducer/@id 
+DELETE FROM transducer WHERE id=@id
+
+GET /transducer/@id
+SELECT * FROM transducer WHERE id=@id
+
+GET /transducer/well/@id
+SELECT * FROM transducer WHERE wellID=@id
+
+POST /transducer
+INSERT INTO transducer (type,name,wellID) VALUES (@type,@name,@wellID)
+
+PUT /transducer/@id
+UPDATE transducer SET col1=val1, col2=val2 WHERE id=@id
+
+GET /well/@id/@aCode/@type/@ownerID
+SELECT * FROM well WHERE id=@id (AND acquiferCode=@aCode AND typeCode=@type AND ownerID=@ownerID
