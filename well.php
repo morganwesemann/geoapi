@@ -66,33 +66,6 @@ Flight::route('GET /api/well/search/(@term)', function($term){
 
     $attrNames = array('id','acquiferCode','typeCode','latitude','longitude','county','state','depth','usageType','pump','bottomElevation','waterElevation','surfaceElevation', 'ownerID','casingID','topDepth','diameter','topDepth','bottomDepth','additionalText');
 
-    /*$sql = "SELECT * FROM well where
-    id LIKE '%'?'%' OR
-    acquiferCode LIKE '%'?'%' OR
-    typeCode LIKE '%'?'%' OR
-    latitude LIKE '%'?'%' OR
-    longitude LIKE '%'?'%' OR
-    county LIKE '%'?'%' OR
-    state LIKE '%'?'%' OR
-    depth LIKE '%'?'%' OR
-    usageType LIKE '%'?'%' OR
-    pump LIKE '%'?'%' OR
-    bottomElevation LIKE '%'?'%' OR
-    waterElevation LIKE '%'?'%' OR
-    surfaceElevation LIKE '%'?'%' OR
-    ownerID LIKE '%'?'%' OR
-    casingID LIKE '%'?'%' OR
-    topDepth LIKE '%'?'%' OR
-    diameter LIKE '%'?'%' OR
-    topDepth LIKE '%'?'%' OR
-    bottomDepth LIKE '%'?'%' OR
-    additionalText LIKE '%'?'%'
-    ";
-
-    $values = array();
-
-     $attrNames = array('id','acquiferCode','typeCode','latitude','longitude','county','state','depth','usageType','pump','bottomElevation','waterElevation','surfaceElevation', 'ownerID','casingID','topDepth','diameter','topDepth','bottomDepth','additionalText');*/
-
     foreach($attrNames as $value) {
         array_push($values,'%'.$term.'%');
     }
@@ -221,7 +194,7 @@ Flight::route('POST /api/well', function(){
     //check the optional attributes
     foreach($optAttrNames as $value) {
         if (isset($_POST[$value]) && !empty($_POST[$value])) {
-            array_push($attrNames,$key); 
+            array_push($attrNames,$value); 
         }
     }
 

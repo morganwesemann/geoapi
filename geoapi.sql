@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 05, 2017 at 01:34 AM
+-- Generation Time: May 08, 2017 at 01:09 AM
 -- Server version: 5.5.42
 -- PHP Version: 7.0.0
 
@@ -30,7 +30,7 @@ CREATE TABLE `owner` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `type` varchar(30) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `owner`
@@ -38,7 +38,10 @@ CREATE TABLE `owner` (
 
 INSERT INTO `owner` (`id`, `name`, `type`) VALUES
 (2, 'Donald Trump', 'Government'),
-(3, 'Robert Kraft', 'person');
+(3, 'Robert Kraft', 'person'),
+(4, 't1', 'test'),
+(5, 'Billy Bob Thornton', 'government'),
+(6, 'Bob Burkins', 'Personal');
 
 -- --------------------------------------------------------
 
@@ -53,14 +56,15 @@ CREATE TABLE `rainfall` (
   `amount` float NOT NULL,
   `averageAmount` float NOT NULL,
   `date` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rainfall`
 --
 
 INSERT INTO `rainfall` (`id`, `latitude`, `longitude`, `amount`, `averageAmount`, `date`) VALUES
-(1, 12.340000, -36.799999, 1.3, 0.9, '2017-05-03 00:00:00');
+(1, 12.340000, -36.799999, 1.3, 0.9, '2017-05-03 00:00:00'),
+(2, 10.000000, 10.000000, 50, 15, '2013-05-08 12:00:00');
 
 -- --------------------------------------------------------
 
@@ -70,17 +74,23 @@ INSERT INTO `rainfall` (`id`, `latitude`, `longitude`, `amount`, `averageAmount`
 
 CREATE TABLE `recordings` (
   `transducerID` varchar(100) NOT NULL,
-  `type` varchar(30) NOT NULL,
-  `value` float NOT NULL,
-  `date` datetime NOT NULL
+  `date` datetime NOT NULL,
+  `temperature` float NOT NULL,
+  `conductivity` float NOT NULL,
+  `pressure` float NOT NULL,
+  `salinity` float NOT NULL,
+  `tds` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `recordings`
 --
 
-INSERT INTO `recordings` (`transducerID`, `type`, `value`, `date`) VALUES
-('0987g', 'temperature', 50.45, '2017-05-04 13:17:21');
+INSERT INTO `recordings` (`transducerID`, `date`, `temperature`, `conductivity`, `pressure`, `salinity`, `tds`) VALUES
+('0987g', '0000-00-00 00:00:00', 67, 19, 65, 54, 18),
+('0987g', '2015-05-08 12:34:15', 67, 19, 65, 54, 18),
+('0987g', '2017-05-08 12:34:15', 67, 19, 65, 54, 18),
+('0987g', '2017-05-09 22:34:00', 72, 1000, 8, 23, 3456);
 
 -- --------------------------------------------------------
 
@@ -153,26 +163,26 @@ ALTER TABLE `owner`
 -- Indexes for table `rainfall`
 --
 ALTER TABLE `rainfall`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`,`latitude`,`longitude`,`date`) USING BTREE;
 
 --
 -- Indexes for table `recordings`
 --
 ALTER TABLE `recordings`
-  ADD PRIMARY KEY (`transducerID`,`date`);
+  ADD PRIMARY KEY (`transducerID`,`date`) USING BTREE;
 
 --
 -- Indexes for table `transducer`
 --
 ALTER TABLE `transducer`
-  ADD PRIMARY KEY (`id`,`wellID`),
+  ADD PRIMARY KEY (`id`) USING BTREE,
   ADD KEY `wellConstraint` (`wellID`);
 
 --
 -- Indexes for table `well`
 --
 ALTER TABLE `well`
-  ADD PRIMARY KEY (`id`,`ownerID`),
+  ADD PRIMARY KEY (`id`) USING BTREE,
   ADD KEY `ownerConstraint` (`ownerID`);
 
 --
@@ -183,12 +193,12 @@ ALTER TABLE `well`
 -- AUTO_INCREMENT for table `owner`
 --
 ALTER TABLE `owner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `rainfall`
 --
 ALTER TABLE `rainfall`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --

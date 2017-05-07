@@ -38,14 +38,17 @@ Flight::route('GET /api/recording/search/(@term)', function($term){
     //prepare the statement and execute
     $sql = "SELECT * FROM recordings WHERE
     transducerID LIKE ? OR
-    type LIKE ? OR
-    value LIKE ? OR
+    temperature LIKE ? OR
+    salinity LIKE ? OR
+    tds LIKE ? OR
+    conductivity LIKE ? OR
+    pressure LIKE ? OR
     date LIKE ?
     ";
 
     $values = array();
 
-    $attrNames = array('transducerID','type','value','date');
+    $attrNames = array('transducerID','temperature','salinity','tds','conductivity','pressure','date');
 
     foreach($attrNames as $value) {
         array_push($values,'%'.$term.'%');
@@ -87,7 +90,7 @@ Flight::route('POST /api/recording', function(){
 	//get the instance of the PDO connection
     $connection = Flight::db();
 
-    $attrNames = array('transducerID','type','value','date');
+    $attrNames = array('date','transducerID','temperature','salinity','tds','conductivity','pressure');
 
     $badDataAttrs = array();
 
@@ -160,7 +163,7 @@ Flight::route('PUT /api/recording/@id:[0-9A-Za-z]+', function($id){
 
     $attrNames = array();
 
-    $optAttrNames = array('type','value');
+    $optAttrNames = array('transducerID','temperature','salinity','tds','conductivity','pressure');
 
     $badDataAttrs = array();
 
